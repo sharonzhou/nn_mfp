@@ -29,11 +29,11 @@ def data():
 def nn(X, Y):
     num_examples = X.shape[0] # all examples
     model = Sequential()
-    model.add(Dense(32, activation='relu', input_dim=5))
-    model.add(Dense(100, activation='relu', input_dim=32))
+    model.add(Dense(500, activation='relu', input_dim=5))
+    model.add(Dense(400, activation='relu', input_dim=32))
     model.add(Dense(300, activation='relu', input_dim=100))
-    model.add(Dense(50, activation='relu', input_dim=100))
-    model.add(Dense(10, activation='relu', input_dim=100))
+    model.add(Dense(350, activation='relu', input_dim=100))
+    model.add(Dense(200, activation='relu', input_dim=100))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam',
                   loss='binary_crossentropy',
@@ -41,7 +41,7 @@ def nn(X, Y):
 
 
     # Train the model, iterating on the data in batches of 32 samples
-    model.fit(X[:num_examples], Y[:num_examples], epochs=20, batch_size=128, validation_split=0.1)
+    model.fit(X[:num_examples], Y[:num_examples], epochs=20, batch_size=256, validation_split=0.1)
 
     score, acc = model.evaluate(X[:num_examples, :], Y[:num_examples], verbose=0)
     print('Test score:', score)
