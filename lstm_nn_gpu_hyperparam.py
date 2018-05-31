@@ -31,7 +31,7 @@ def data():
 
 def nn(X, Y):
     model = Sequential()
-    M = Masking(mask_value=0, input_shape=(54, 1))
+    M = Masking(mask_value=0, input_shape=(X.shape[1], X.shape[2]))
     model.add(M)
     model.add(LSTM(500, input_shape=(None, 1), activation="tanh"))
     model.add(Dropout({{uniform(0, 1)}}))
