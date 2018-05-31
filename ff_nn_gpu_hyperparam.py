@@ -57,7 +57,7 @@ def nn(X, Y):
     print('Test score:', score)
     print('Test accuracy:', acc)
 
-   return {'loss': -acc, 'status': STATUS_OK, 'model': model}
+    return {'loss': -acc, 'status': STATUS_OK, 'model': model}
 
 best_params, best_model = optim.minimize(model=nn,
                                         data=data,
