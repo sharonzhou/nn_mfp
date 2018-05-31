@@ -26,6 +26,7 @@ def data():
     padded_X = genfromtxt('cs230_padded_05292018.csv', delimiter=',')
     Y = genfromtxt('cs230_y_05292018.csv', delimiter=',')
     X = padded_X.reshape(padded_X.shape + (1,))
+    print(X.shape, Y.shape)
     return X, Y
 
 def nn(X, Y):

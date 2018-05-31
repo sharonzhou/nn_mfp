@@ -2,7 +2,7 @@ import numpy as np
 from numpy import genfromtxt
 
 from keras.models import Model, Sequential
-from keras.layers import Input, LSTM, Dense, Masking, Dropout, Activation
+from keras.layers import Input, LSTM, Dense, Masking, Dropout, Activation, BatchNormalization
 from keras.optimizers import Adadelta, Adam, rmsprop
 
 import tensorflow as tf
@@ -29,11 +29,23 @@ def data():
 def nn(X, Y):
     num_examples = X.shape[0] # all examples
     model = Sequential()
-    model.add(Dense(500, activation='relu', input_dim=5))
-    model.add(Dense(400, activation='relu', input_dim=32))
-    model.add(Dense(300, activation='relu', input_dim=100))
-    model.add(Dense(350, activation='relu', input_dim=100))
-    model.add(Dense(200, activation='relu', input_dim=100))
+    model.add(Dense(500, input_dim=X.shape[1]))
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+    model.add(Dense(400, input_dim=32))
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+    model.add(Dense(300, input_dim=100))
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+    model.add(Dense(350, input_dim=100))
+    model.add(Activation('relu'))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))
+    model.add(Dense(200, input_dim=100))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam',
                   loss='binary_crossentropy',
