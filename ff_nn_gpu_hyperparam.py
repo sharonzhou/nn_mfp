@@ -35,7 +35,7 @@ def data():
 def nn(X, Y):
     num_examples = X.shape[0] # all examples
     model = Sequential()
-    model.add(Dense({{choice([256, 512, 1024])}}))
+    model.add(Dense({{choice([256, 512, 1024])}}), input_dim=5)
     model.add(Activation({{choice(['relu', 'tanh', 'softmax'])}}))
     model.add(Dense({{choice([256, 512, 1024])}}))
     model.add(Activation({{choice(['relu', 'tanh', 'softmax'])}}))
