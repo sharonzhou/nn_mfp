@@ -17,8 +17,8 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True 
 
 def data():
-    X = genfromtxt('first_last_filt.csv', delimiter=',')
-    Y = genfromtxt('y_new.csv', delimiter=',')
+    X = genfromtxt('first_last_filt_age_gender_bmi.csv', delimiter=',')
+    Y = genfromtxt('y_new_age_gender_bmi.csv', delimiter=',')
 
     print(X.shape)
     print(Y.shape)
@@ -28,32 +28,35 @@ def data():
 
 def nn(X, Y):
     num_examples = X.shape[0] # all examples
+    # num_examples = 50000
     model = Sequential()
     model.add(Dense(500, input_dim=X.shape[1]))
     model.add(Activation('relu'))
     model.add(BatchNormalization())
     model.add(Dropout(0.5))
-    model.add(Dense(400, input_dim=32))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.5))
-    model.add(Dense(300, input_dim=100))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.5))
-    model.add(Dense(350, input_dim=100))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.5))
-    model.add(Dense(200, input_dim=100))
+
+    num_layer_sets = 1
+    for i in range(num_layer_sets):
+        model.add(Dense(400))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.5))
+        model.add(Dense(300))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.5))
+        model.add(Dense(350))
+        model.add(Activation('relu'))
+        model.add(BatchNormalization())
+        model.add(Dropout(0.5))
+
     model.add(Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam',
                   loss='binary_crossentropy',
                   metrics=['accuracy'])
 
-
     # Train the model, iterating on the data in batches of 32 samples
-    model.fit(X[:num_examples], Y[:num_examples], epochs=20, batch_size=256, validation_split=0.1)
+    model.fit(X[:num_examples], Y[:num_examples], epochs=100, batch_size=1024, validation_split=0.1)
 
     score, acc = model.evaluate(X[:num_examples, :], Y[:num_examples], verbose=0)
     print('Test score:', score)
