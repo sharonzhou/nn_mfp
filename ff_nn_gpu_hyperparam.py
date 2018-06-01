@@ -62,9 +62,15 @@ def nn(X, Y):
 best_params, best_model = optim.minimize(model=nn,
                                         data=data,
                                         algo=tpe.suggest,
-                                        max_evals=30,
+                                        max_evals=3,
                                         trials=Trials())
 
+
+print("Best performing model chosen hyper-parameters:")
+print(best_params)
+X, Y = data()
+print("Evaluation of best performing model:")
+print(best_model.evaluate(X, Y))
 
 # serialize model to JSON
 model_json = best_model.to_json()
@@ -75,11 +81,6 @@ with open("ff_model_hyperparam.json", "w") as json_file:
 best_model.save_weights("ff_model_hyperparam.h5")
 print("Saved ff model to disk")
 
-X, Y = data()
-print("Evaluation of best performing model:")
-print(best_model.evaluate(X, Y))
-print("Best performing model chosen hyper-parameters:")
-print(best_params)
 
 
 
